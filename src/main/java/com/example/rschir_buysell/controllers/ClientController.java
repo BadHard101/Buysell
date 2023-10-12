@@ -1,6 +1,7 @@
 package com.example.rschir_buysell.controllers;
 
 import com.example.rschir_buysell.models.Client;
+import com.example.rschir_buysell.services.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
@@ -17,10 +18,9 @@ import javax.servlet.http.HttpSession;
 public class ClientController {
     private final ClientService clientService;
 
-
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "authorization/login";
     }
 
     @GetMapping("/login-error")
@@ -35,26 +35,33 @@ public class ClientController {
             }
         }
         model.addAttribute("errorMessage", "Введены неверные данные");
-        return "login";
+        return "authorization/login";
     }
 
     @GetMapping("/registration")
     public String registration() {
-        return "registration";
+        return "authorization/registration";
     }
 
     @PostMapping("/registration")
     public String createUser(Client client, Model model) {
-        if (!clientService.createUser(client)) {
-            model.addAttribute("errorMessage", "Пользователь с email: " + client.getEmail() + " уже существует");
-            return "registration";
+        String temp = clientService.createClient(client);
+        if (!temp.isEmpty()) {
+            if (temp.equals("login")) {
+                model.addAttribute("errorMessage",
+                        "Пользователь с логином: " + client.getLogin() + " уже существует");
+            } else if (temp.equals("email")){
+                model.addAttribute("errorMessage",
+                        "Пользователь с почтой: " + client.getEmail() + " уже существует");
+            }
+            return "authorization/registration";
         }
         return "redirect:/login";
     }
 
-    @GetMapping("/account")
+    /*@GetMapping("/account")
     public String account() {
-
-    }
+        return "account";
+    }*/
 
 }

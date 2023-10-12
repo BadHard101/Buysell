@@ -12,13 +12,14 @@ import java.security.Principal;
 @RequiredArgsConstructor
 @RequestMapping("/products")
 public class ProductController {
-    private final ProductService productService;
+    //private final ProductService productService;
 
     @GetMapping("/")
     public String products() {
+        return "productsOnSell";
     }
 
-    @PostMapping("")
+    /*@PostMapping("")
     public String addProduct() {
 
     }
@@ -31,6 +32,6 @@ public class ProductController {
     @DeleteMapping("")
     public String updateProduct() {
 
-    }
+    }*/
 
 }

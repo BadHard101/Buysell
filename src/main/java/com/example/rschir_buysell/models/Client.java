@@ -1,15 +1,18 @@
 package com.example.rschir_buysell.models;
 
+import com.example.rschir_buysell.models.enums.Role;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table
 @Data
-public class Client {
+public class Client implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
@@ -27,7 +30,59 @@ public class Client {
     @Column
     private String password;
 
+    @Column
+    private boolean active;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "client")
     List<Product> products = new ArrayList<>();
 
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles = new HashSet<>();
+
+    // security
+
+    /*public boolean hasAvatar() {
+        return avatar != null;
+    }*/
+
+    public boolean isAdmin() {
+        return roles.contains(Role.ROLE_ADMIN);
+    }
+
+    public boolean isCarrier() {
+        return roles.contains(Role.ROLE_CARRIER);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return active;
+    }
 }
