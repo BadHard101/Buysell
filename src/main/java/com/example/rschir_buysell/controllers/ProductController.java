@@ -104,9 +104,10 @@ public class ProductController {
         }
     }
 
-    /*@DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable("id") Long id) {
         productService.deleteProduct(id);
         return "redirect:/products/";
-    }*/
+    }
 }
