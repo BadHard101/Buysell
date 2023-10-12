@@ -43,7 +43,7 @@
     <#else>
         Авторизируйтесь, чтобы сделать заказ!
     </#if>-->
-    <#--<#if user.isEnabled()>-->
+    <#if user.isActive()>
     <#list types as type>
         <h3>${type}</h3>
         <#assign productsFound = false>
@@ -61,7 +61,7 @@
         </#if>
         <hr>
     </#list>
-    <#--</#if>-->
+    </#if>
     <#--<#if user.email??>
         <hr>
         <h3>Заказать перевозку</h3>

@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <h1>Buysell</h1>
-    <#--<#if user.login??>-->
+    <#if user.isActive()>
         <hr>
         <h3>Выставить на продажу</h3>
         <form action="/products/create" method="post" enctype="multipart/form-data">
@@ -29,7 +29,7 @@
             <input type="hidden" name="_csrf" value="${_csrf.token}">
             <input type="submit" value="Добавить заказ" class="btn btn-primary"/>
         </form>
-    <#--</#if>-->
+    </#if>
     <#if errorMessage??>
         <h2 style="color: red">${errorMessage}</h2>
     </#if>

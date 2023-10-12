@@ -24,7 +24,7 @@ public class ProductService {
 
     public Client getClientByPrincipal(Principal principal) {
         if (principal == null) return new Client();
-        return clientRepository.findByLogin(principal.getName());
+        return clientRepository.findByEmail(principal.getName());
     }
 
     public void createProduct(Principal principal, Product product) {

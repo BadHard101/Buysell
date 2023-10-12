@@ -19,10 +19,10 @@ public class Client implements UserDetails {
     private Long id;
 
     @Column(unique = true)
-    private String email;
+    private String login;
 
     @Column(unique = true)
-    private String login;
+    private String email;
 
     @Column
     private String phoneNumber;
