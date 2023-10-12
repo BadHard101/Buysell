@@ -5,8 +5,8 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -14,12 +14,9 @@ import java.util.*;
 @Data
 public class Client implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
-
-    @Column
-    private String name;
 
     @Column(unique = true)
     private String email;
@@ -28,13 +25,20 @@ public class Client implements UserDetails {
     private String login;
 
     @Column
-    private String password;
+    private String phoneNumber;
+
+    @Column
+    private String name;
 
     @Column
     private boolean active;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "client")
-    List<Product> products = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "image_id")
+    private Image avatar;
+
+    @Column
+    private String password;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role",
@@ -42,11 +46,21 @@ public class Client implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "client")
+    List<Product> products = new ArrayList<>();
+
+    private LocalDateTime dateOfCreated;
+
+    @PrePersist
+    private void init() {
+        dateOfCreated = LocalDateTime.now();
+    }
+
     // security
 
-    /*public boolean hasAvatar() {
+    public boolean hasAvatar() {
         return avatar != null;
-    }*/
+    }
 
     public boolean isAdmin() {
         return roles.contains(Role.ROLE_ADMIN);

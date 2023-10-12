@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Buysell</title>
+    <title>GruziVizi</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-4">Buysell</h1>
+    <h1 class="mt-4">GruziVizi</h1>
     <hr>
     <h4 class="mt-4">Авторизация</h4> <br>
     <form action="/login" method="post">
         <div class="form-group">
-            <label for="login">Логин:</label>
-            <input type="text" class="form-control" id="login" name="login">
+            <label for="username">Логин:</label>
+            <input type="text" class="form-control" id="username" name="username">
         </div>
         <div class="form-group">
             <label for="password">Пароль:</label>
