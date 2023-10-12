@@ -16,7 +16,7 @@ public class ProductController {
 
     @GetMapping("/")
     public String products() {
-        return "productsOnSell";
+        return "user/productsOnSell";
     }
 
     /*@PostMapping("")
