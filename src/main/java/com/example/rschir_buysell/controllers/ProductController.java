@@ -57,7 +57,8 @@ public class ProductController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editProductForm(@PathVariable("id") Long id, Model model) {
+    public String editProductForm(@PathVariable("id") Long id, Model model, Principal principal) {
+        model.addAttribute("user", productService.getClientByPrincipal(principal));
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
         model.addAttribute("types", ProductType.values());

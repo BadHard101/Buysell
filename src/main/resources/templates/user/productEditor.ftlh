@@ -14,6 +14,20 @@
 <div class="container">
     <h1>Buysell</h1>
     <hr>
+    <#if user.email??>
+        <h3>Пользователь: <i>${user.login}</i></h3>
+        <#if user.isActive()>
+            <a href="/products/" class="btn btn-primary">Главная</a>
+        </#if>
+        <form action="/logout" method="post">
+            <br>
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <input type="submit" value="Выйти" class="btn btn-danger"/>
+        </form>
+    <#else>
+        <a href="/login" class="btn btn-primary">Войти</a>
+    </#if>
+    <hr>
     <h3>Обновить информацию о продукте:</h3>
     <form action="/products/${product.id}/edit" method="post" enctype="multipart/form-data">
         Имя продукта: <input type="text" name="name" value="${product.name}"/><br><br>
