@@ -35,25 +35,76 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public String createProduct(Product product, Principal principal) {
-        productService.createProduct(principal, product);
-        return "redirect:/products/";
+    public String createProduct(Product product, Principal principal, Model model) {
+        if (product.getProductType() != null && product.getPrice() != null && product.getPrice() > 0 &&
+                product.getName() != null && !product.getName().isEmpty()) {
+            productService.createProduct(principal, product);
+            return "redirect:/products/";
+        } else {
+            model.addAttribute("user", productService.getClientByPrincipal(principal));
+            model.addAttribute("types", ProductType.values());
+            if (product.getProductType() == null) {
+                model.addAttribute("errorMessage", "Выберете тип продукта!");
+            } else if (product.getPrice() == null) {
+                model.addAttribute("errorMessage", "Укажите цену!");
+            } else if (product.getPrice() <= 0) {
+                model.addAttribute("errorMessage", "Укажите корректную цену!");
+            } else if (product.getName() == null || product.getName().isEmpty()) {
+                model.addAttribute("errorMessage", "Напишите имя!");
+            }
+            return "user/productCreator";
+        }
     }
 
-    /*@GetMapping("/{id}/edit")
-    public String editProductForm(@PathVariable Long id, Model model) {
+    @GetMapping("/{id}/edit")
+    public String editProductForm(@PathVariable("id") Long id, Model model) {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
-        return "user/editProduct";
+        model.addAttribute("types", ProductType.values());
+
+        // Получите цену товара (например, из базы данных)
+        double price = product.getPrice();
+        // Удалите пробелы из форматированной цены
+        String formattedPrice = Double.toString(price).replace(" ", "");
+        // Передайте форматированную цену в модель
+        model.addAttribute("formattedPrice", formattedPrice);
+
+        return "user/productEditor";
     }
 
-    @PatchMapping("/{id}/edit")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
-        productService.updateProduct(id, product);
-        return "redirect:/products/";
+    @PostMapping("/{id}/edit")
+    public String updateProduct(@PathVariable("id") Long id, Product product, Model model, Principal principal) {
+        if (product.getProductType() != null && product.getPrice() != null && product.getPrice() > 0 &&
+                product.getName() != null && !product.getName().isEmpty()) {
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            productService.updateProduct(id, product);
+            return "redirect:/products/";
+        } else {
+            model.addAttribute("user", productService.getClientByPrincipal(principal));
+            model.addAttribute("types", ProductType.values());
+            if (product.getProductType() == null) {
+                model.addAttribute("errorMessage", "Выберете тип продукта!");
+            } else if (product.getPrice() == null) {
+                model.addAttribute("errorMessage", "Укажите цену!");
+            } else if (product.getPrice() <= 0) {
+                model.addAttribute("errorMessage", "Укажите корректную цену!");
+            } else if (product.getName() == null || product.getName().isEmpty()) {
+                model.addAttribute("errorMessage", "Напишите имя!");
+            }
+
+            product = productService.getProductById(id);
+            // Получите цену товара (например, из базы данных)
+            double price = product.getPrice();
+            // Удалите пробелы из форматированной цены
+            String formattedPrice = Double.toString(price).replace(" ", "");
+            // Передайте форматированную цену в модель
+            model.addAttribute("formattedPrice", formattedPrice);
+
+            return "user/productEditor";
+        }
     }
 
-    @DeleteMapping("/{id}")
+    /*@DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return "redirect:/products/";

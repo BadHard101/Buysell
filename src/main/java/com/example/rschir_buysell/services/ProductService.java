@@ -31,4 +31,16 @@ public class ProductService {
         product.setClient(getClientByPrincipal(principal));
         productRepository.save(product);
     }
+
+    public Product getProductById(Long id) {
+        return productRepository.getById(id);
+    }
+
+    public void updateProduct(Long id, Product product) {
+        Product original = productRepository.getById(id);
+        original.setName(product.getName());
+        original.setPrice(product.getPrice());
+        original.setProductType(product.getProductType());
+        productRepository.save(original);
+    }
 }

@@ -18,9 +18,10 @@
         <h3>Выставить на продажу</h3>
         <form action="/products/create" method="post" enctype="multipart/form-data">
             Имя продукта: <input type="text" name="name"/><br><br>
-            Цена: <input type="number" step="0.1" name="price"/><br><br>
+            Цена: <input type="number" step="0.01" name="price"/><br><br>
             Выберете тип продукта:
-            <select name="productType">
+            <select name="productType" id="productType">
+                <option value="Тип" selected disabled>Тип</option>
                 <#list types as type>
                     <option value="${type}">${type}</option>
                 </#list>
