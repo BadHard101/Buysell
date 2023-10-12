@@ -30,9 +30,8 @@ public class Product {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ElementCollection(targetClass = ProductType.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "product_type", joinColumns = @JoinColumn(name = "product_id"))
+    @Column
     @Enumerated(EnumType.STRING)
-    private Set<ProductType> types = new HashSet<>();
+    private ProductType productType;
 
 }

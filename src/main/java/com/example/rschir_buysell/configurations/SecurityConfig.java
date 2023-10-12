@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/registration") // можно тем, кто не авторизован
+                .antMatchers("/products/", "/registration") // можно тем, кто не авторизован
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
