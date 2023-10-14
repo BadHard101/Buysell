@@ -18,7 +18,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public String products(Model model, Principal principal) {
         List<Product> products = productService.getAllProducts();
         model.addAttribute("products", products);
