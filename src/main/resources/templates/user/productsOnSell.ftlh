@@ -39,28 +39,31 @@
         Авторизируйтесь, чтобы сделать заказ!
     </#if>-->
     <#if user.isActive()>
-    <#list types as type>
-        <h3>${type}</h3>
-        <#assign productsFound = false>
-        <#list products as product>
-            <#if product.getProductType() == type>
-                <div class="alert alert-success">
-                    <p>Продукт <b>${product.name}</b> ${product.price}$ |
-                        <#if user.id == product.client.id>
-                        <a href="/products/${product.id}/edit">Редактировать</a> |
-                        <a href="/products/delete/${product.id}">Удалить</a> |
-                        </#if>
-                        <a href="/products/${product.id}">Подробнее...</a>
-                    </p>
-                </div>
-                <#assign productsFound = true>
+        <#list types as type>
+            <#if type != "Тип">
+                <h3>${type}</h3>
+                <#assign productsFound = false>
+                <#list products as product>
+                    <#if product.getProductType() == type>
+                        <div class="alert alert-success">
+                            <p>Продукт <b>${product.name}</b> ${product.price}$ |
+                                <#if user.id == product.client.id>
+                                    <a href="/products/${product.id}/edit">Редактировать</a> |
+                                    <a href="/products/delete/${product.id}">Удалить</a> |
+                                </#if>
+                                <a href="/products/${product.id}">Подробнее...</a>
+                            </p>
+                        </div>
+                        <#assign productsFound = true>
+                    </#if>
+                </#list>
+                <#if productsFound == false>
+                    <h3>Продуктов нет</h3>
+                </#if>
+                <hr>
             </#if>
         </#list>
-        <#if productsFound == false>
-            <h3>Продуктов нет</h3>
-        </#if>
-        <hr>
-    </#list>
+
     </#if>
 
 </div>

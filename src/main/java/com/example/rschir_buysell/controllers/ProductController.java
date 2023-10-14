@@ -36,14 +36,14 @@ public class ProductController {
 
     @PostMapping("/create")
     public String createProduct(Product product, Principal principal, Model model) {
-        if (product.getProductType() != null && product.getPrice() != null && product.getPrice() > 0 &&
+        if (product.getProductType() != ProductType.Тип && product.getPrice() != null && product.getPrice() > 0 &&
                 product.getName() != null && !product.getName().isEmpty()) {
             productService.createProduct(principal, product);
             return "redirect:/products/";
         } else {
             model.addAttribute("user", productService.getClientByPrincipal(principal));
             model.addAttribute("types", ProductType.values());
-            if (product.getProductType() == null) {
+            if (product.getProductType() == ProductType.Тип) {
                 model.addAttribute("errorMessage", "Выберете тип продукта!");
             } else if (product.getPrice() == null) {
                 model.addAttribute("errorMessage", "Укажите цену!");
@@ -75,17 +75,14 @@ public class ProductController {
 
     @PostMapping("/{id}/edit")
     public String updateProduct(@PathVariable("id") Long id, Product product, Model model, Principal principal) {
-        if (product.getProductType() != null && product.getPrice() != null && product.getPrice() > 0 &&
+        if (product.getPrice() != null && product.getPrice() > 0 &&
                 product.getName() != null && !product.getName().isEmpty()) {
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             productService.updateProduct(id, product);
             return "redirect:/products/";
         } else {
             model.addAttribute("user", productService.getClientByPrincipal(principal));
             model.addAttribute("types", ProductType.values());
-            if (product.getProductType() == null) {
-                model.addAttribute("errorMessage", "Выберете тип продукта!");
-            } else if (product.getPrice() == null) {
+            if (product.getPrice() == null) {
                 model.addAttribute("errorMessage", "Укажите цену!");
             } else if (product.getPrice() <= 0) {
                 model.addAttribute("errorMessage", "Укажите корректную цену!");

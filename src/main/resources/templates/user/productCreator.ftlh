@@ -35,9 +35,12 @@
             Цена: <input type="number" step="0.01" name="price"/><br><br>
             Выберете тип продукта:
             <select name="productType" id="productType">
-                <option value="Тип" selected disabled>Тип</option>
                 <#list types as type>
-                    <option value="${type}">${type}</option>
+                    <#if type == "Тип">
+                        <option value="${type}" hidden="" selected>${type}</option>
+                    <#else>
+                        <option value="${type}">${type}</option>
+                    </#if>
                 </#list>
             </select>
             <br><br>

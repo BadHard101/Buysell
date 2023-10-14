@@ -38,7 +38,11 @@
                 <#if type == product.getProductType()>
                     <option value="${type}" selected>${type}</option>
                 <#else>
-                    <option value="${type}">${type}</option>
+                    <#if type == "Тип">
+                        <option value="${type}" hidden="">${type}</option>
+                    <#else>
+                        <option value="${type}">${type}</option>
+                    </#if>
                 </#if>
             </#list>
         </select>
