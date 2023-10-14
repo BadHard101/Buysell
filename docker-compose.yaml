@@ -22,7 +22,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_ROOT_PASSWORD: badhardsql!
       MYSQL_DATABASE: rschir_pr5
-      MYSQL_USER: root
+      MYSQL_USER: user
       MYSQL_PASSWORD: badhardsql!
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
