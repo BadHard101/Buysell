@@ -17,8 +17,6 @@ public class ClientService {
 
     public String createClient(Client client) {
         String temp = client.getEmail();
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(clientRepository.findByEmail(temp));
         if (clientRepository.findByEmail(temp) != null)
             return "email";
         temp = client.getLogin();
