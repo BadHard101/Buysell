@@ -60,7 +60,9 @@ public class ProductService {
         productRepository.save(original);
     }
 
-    public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
+    public void deleteProduct(Long id, Client client) {
+        if (client.getId() == productRepository.getById(id).getClient().getId()) {
+            productRepository.delete(productRepository.getById(id));
+        }
     }
 }

@@ -34,9 +34,7 @@ public class ProductController {
 
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id, @AuthenticationPrincipal Client client) {
-        if(client.getId() == productRepository.getById(id).getClient().getId()) {
-            productRepository.delete(productRepository.getById(id));
-        }
+        productService.deleteProduct(id, client);
         return "redirect:/";
     }
 }
