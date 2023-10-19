@@ -1,8 +1,8 @@
 package com.example.rschir_buysell.repositories;
 
-import com.example.rschir_buysell.models.Product;
 import com.example.rschir_buysell.models.products.Book;
+import com.example.rschir_buysell.models.products.WashingMachine;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface WashingMachineRepository extends JpaRepository<WashingMachine, Long> {
 }

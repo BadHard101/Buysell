@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -29,4 +31,10 @@ public class ClientService {
         clientRepository.save(client);
         return "";
     }
+
+    public Client getClientByPrincipal(Principal principal) {
+        if (principal == null) return new Client();
+        return clientRepository.findByEmail(principal.getName());
+    }
+
 }

@@ -27,9 +27,25 @@ public class ProductService {
         return clientRepository.findByEmail(principal.getName());
     }
 
-    public void createProduct(Principal principal, Product product) {
-        product.setClient(getClientByPrincipal(principal));
-        productRepository.save(product);
+    public String createProduct(Principal principal, Product product) {
+        if (
+                product.getPrice() != null &&
+                product.getPrice() > 0 &&
+                product.getName() != null &&
+                !product.getName().isEmpty()
+        ) {
+            product.setClient(getClientByPrincipal(principal));
+            productRepository.save(product);
+        } else {
+            if (product.getPrice() == null) {
+                return "Укажите цену!";
+            } else if (product.getPrice() <= 0) {
+                return "Укажите корректную цену!";
+            } else if (product.getName() == null || product.getName().isEmpty()) {
+                return "Напишите имя!";
+            }
+        }
+        return "Success";
     }
 
     public Product getProductById(Long id) {

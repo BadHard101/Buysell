@@ -1,7 +1,10 @@
 package com.example.rschir_buysell.controllers;
 
 import com.example.rschir_buysell.models.Client;
+import com.example.rschir_buysell.models.Product;
+import com.example.rschir_buysell.models.enums.ProductType;
 import com.example.rschir_buysell.services.ClientService;
+import com.example.rschir_buysell.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
@@ -12,11 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class ClientController {
     private final ClientService clientService;
+    private final ProductService productService;
 
     @GetMapping("/login")
     public String login() {
@@ -63,5 +69,14 @@ public class ClientController {
     public String account() {
         return "account";
     }*/
+
+    @GetMapping("")
+    public String categories(Model model, Principal principal) {
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        model.addAttribute("user", clientService.getClientByPrincipal(principal));
+        model.addAttribute("types", ProductType.values());
+        return "user/main";
+    }
 
 }

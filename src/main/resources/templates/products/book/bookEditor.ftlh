@@ -17,7 +17,7 @@
     <#if user.email??>
         <h3>Пользователь: <i>${user.login}</i></h3>
         <#if user.isActive()>
-            <a href="/products/" class="btn btn-primary">Главная</a>
+            <a href="/" class="btn btn-primary">Главная</a>
         </#if>
         <form action="/logout" method="post">
             <br>
@@ -28,25 +28,12 @@
         <a href="/login" class="btn btn-primary">Войти</a>
     </#if>
     <hr>
-    <h3>Обновить информацию о продукте:</h3>
-    <form action="/products/${product.id}/edit" method="post" enctype="multipart/form-data">
-        Имя продукта: <input type="text" name="name" value="${product.name}"/><br><br>
+    <h3>Обновить информацию о книге:</h3>
+    <form action="/book/edit/${book.id}" method="post" enctype="multipart/form-data">
+        Название книги: <input type="text" name="name" value="${book.name}"/><br><br>
+        Автор: <input type="text" name="author" value="${book.author}"/><br><br>
         Цена: <input type="number" step="0.01" name="price" value="${formattedPrice}"/><br><br>
-        Выберете тип продукта:
-        <select name="productType">
-            <#list types as type>
-                <#if type == product.getProductType()>
-                    <option value="${type}" selected>${type}</option>
-                <#else>
-                    <#if type == "Тип">
-                        <option value="${type}" hidden="">${type}</option>
-                    <#else>
-                        <option value="${type}">${type}</option>
-                    </#if>
-                </#if>
-            </#list>
-        </select>
-        <br><br>
+
         <input type="hidden" name="_csrf" value="${_csrf.token}">
         <input type="submit" value="Сохранить" class="btn btn-primary"/>
     </form>

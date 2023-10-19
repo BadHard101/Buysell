@@ -17,7 +17,7 @@
     <#if user.email??>
         <h3>Пользователь: <i>${user.login}</i></h3>
         <#if user.isActive()>
-            <a href="/products/" class="btn btn-primary">Главная</a>
+            <a href="/" class="btn btn-primary">Главная</a>
         </#if>
         <form action="/logout" method="post">
             <br>
@@ -30,23 +30,7 @@
     <hr>
     <#if user.isActive()>
         <h3>Выставить на продажу</h3>
-        <form action="/products/create" method="post" enctype="multipart/form-data">
-            Имя продукта: <input type="text" name="name"/><br><br>
-            Цена: <input type="number" step="0.01" name="price"/><br><br>
-            Выберете тип продукта:
-            <select name="productType" id="productType">
-                <#list types as type>
-                    <#if type == "Тип">
-                        <option value="${type}" hidden="" selected>${type}</option>
-                    <#else>
-                        <option value="${type}">${type}</option>
-                    </#if>
-                </#list>
-            </select>
-            <br><br>
-            <input type="hidden" name="_csrf" value="${_csrf.token}">
-            <input type="submit" value="Выставить на продажу" class="btn btn-primary"/>
-        </form>
+        <a href="/book/create">Книга</a>
     </#if>
     <#if errorMessage??>
         <h2 style="color: red">${errorMessage}</h2>
