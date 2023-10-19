@@ -3,14 +3,14 @@ package com.example.rschir_buysell.controllers;
 import com.example.rschir_buysell.models.Client;
 import com.example.rschir_buysell.models.Product;
 import com.example.rschir_buysell.models.enums.ProductType;
+import com.example.rschir_buysell.repositories.ProductRepository;
 import com.example.rschir_buysell.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -21,6 +21,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductRepository productRepository;
 
     @GetMapping("/typeSelect")
     public String productTypeSelect(Model model, Principal principal) {
@@ -32,15 +33,10 @@ public class ProductController {
     }
 
     @GetMapping("/delete/{id}")
-    @PostMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable("id") Long id, Principal principal) {
-        Client client = productService.getClientByPrincipal(principal);
-        Product product = productService.getProductById(id);
-        System.out.println(client.getId());
-        System.out.println(product.getClient().getId());
-        if (client.getId().equals(product.getClient().getId()))
-            productService.deleteProduct(id);
+    public String deleteProduct(@PathVariable Long id, @AuthenticationPrincipal Client client) {
+        if(client.getId() == productRepository.getById(id).getClient().getId()) {
+            productRepository.delete(productRepository.getById(id));
+        }
         return "redirect:/";
     }
-
 }

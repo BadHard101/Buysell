@@ -1,10 +1,12 @@
 package com.example.rschir_buysell.controllers;
 
+import com.example.rschir_buysell.models.Client;
 import com.example.rschir_buysell.models.enums.ProductType;
 import com.example.rschir_buysell.models.products.Book;
 import com.example.rschir_buysell.services.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -82,15 +84,9 @@ public class BookController {
         }
     }
 
-    /*@GetMapping("/delete/{id}")
-    @PostMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable("id") Long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        System.out.println(email);
-        if (bookService.getBookById(id).getClient().getEmail().equals(email))
-            bookService.deleteBook(id);
-        return "redirect:/book/selling";
-    }*/
-
+    @GetMapping("/delete/{id}")
+    public String deleteBook(@PathVariable Long id, @AuthenticationPrincipal Client client) {
+        bookService.deleteBook(id, client);
+        return "redirect:/";
+    }
 }

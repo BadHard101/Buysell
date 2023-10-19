@@ -18,7 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
-    private final ProductRepository productRepository;
     private final ClientRepository clientRepository;
 
     public Client getClientByPrincipal(Principal principal) {
@@ -88,9 +87,9 @@ public class BookService {
         return "Success";
     }
 
-    @Transactional
-    public void deleteBook(Long id) {
-        productRepository.deleteById(id);
-        productRepository.flush();
+    public void deleteBook(Long id, Client client) {
+        if (client.getId() == bookRepository.getById(id).getClient().getId()) {
+            bookRepository.delete(bookRepository.getById(id));
+        }
     }
 }
