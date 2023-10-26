@@ -28,12 +28,16 @@
         <a href="/login" class="btn btn-primary">Войти</a>
     </#if>
     <hr>
-    <#if user.isActive()>
-        <h3>Выставить на продажу</h3>
-        <a href="/phone/create">Телефон</a>
-        <a href="/book/create">Книга</a>
-        <a href="/washingMachine/create">Стиральная машина</a>
-    </#if>
+    <h3>Обновить информацию о телефоне:</h3>
+    <form action="/phone/edit/${phone.id}" method="post" enctype="multipart/form-data">
+        Название телефона: <input type="text" name="name" value="${phone.name}"/><br><br>
+        Производитель: <input type="text" name="manufacturer" value="${phone.manufacturer}"/><br><br>
+        Вместимоть батареи: <input type="number" name="batteryCapacity" value="${formattedCapacity}"/><br><br>
+        Цена: <input type="number" step="0.01" name="price" value="${formattedPrice}"/><br><br>
+
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
+        <input type="submit" value="Сохранить" class="btn btn-primary"/>
+    </form>
     <#if errorMessage??>
         <h2 style="color: red">${errorMessage}</h2>
     </#if>

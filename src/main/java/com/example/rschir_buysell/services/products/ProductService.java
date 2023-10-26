@@ -1,9 +1,9 @@
-package com.example.rschir_buysell.services;
+package com.example.rschir_buysell.services.products;
 
 import com.example.rschir_buysell.models.Client;
-import com.example.rschir_buysell.models.Product;
+import com.example.rschir_buysell.models.products.Product;
 import com.example.rschir_buysell.repositories.ClientRepository;
-import com.example.rschir_buysell.repositories.ProductRepository;
+import com.example.rschir_buysell.repositories.products.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

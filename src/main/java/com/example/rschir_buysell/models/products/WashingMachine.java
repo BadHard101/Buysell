@@ -1,6 +1,5 @@
 package com.example.rschir_buysell.models.products;
 
-import com.example.rschir_buysell.models.Product;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

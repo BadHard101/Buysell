@@ -1,6 +1,5 @@
 package com.example.rschir_buysell.models.products;
 
-import com.example.rschir_buysell.models.Product;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,7 +9,7 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-public class Telephone extends Product {
+public class Phone extends Product {
     @Column
     private String manufacturer;
 

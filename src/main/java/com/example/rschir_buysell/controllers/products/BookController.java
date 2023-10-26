@@ -1,13 +1,11 @@
-package com.example.rschir_buysell.controllers;
+package com.example.rschir_buysell.controllers.products;
 
 import com.example.rschir_buysell.models.Client;
 import com.example.rschir_buysell.models.enums.ProductType;
 import com.example.rschir_buysell.models.products.Book;
-import com.example.rschir_buysell.services.BookService;
+import com.example.rschir_buysell.services.products.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

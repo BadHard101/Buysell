@@ -1,10 +1,10 @@
 package com.example.rschir_buysell.controllers;
 
 import com.example.rschir_buysell.models.Client;
-import com.example.rschir_buysell.models.Product;
+import com.example.rschir_buysell.models.products.Product;
 import com.example.rschir_buysell.models.enums.ProductType;
 import com.example.rschir_buysell.services.ClientService;
-import com.example.rschir_buysell.services.ProductService;
+import com.example.rschir_buysell.services.products.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;

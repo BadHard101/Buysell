@@ -30,9 +30,15 @@
     <hr>
     <#if user.isActive()>
         <h3>Выставить на продажу</h3>
-        <a href="/phone/create">Телефон</a>
-        <a href="/book/create">Книга</a>
-        <a href="/washingMachine/create">Стиральная машина</a>
+        <form action="/phone/create" method="post" enctype="multipart/form-data">
+            Название телефона: <input type="text" name="name"/><br><br>
+            Производитель: <input type="text" name="manufacturer"/><br><br>
+            Вместимоть батареи: <input type="number" name="batteryCapacity"/><br><br>
+            Цена: <input type="number" step="0.01" name="price"/><br><br>
+
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <input type="submit" value="Выставить на продажу" class="btn btn-primary"/>
+        </form>
     </#if>
     <#if errorMessage??>
         <h2 style="color: red">${errorMessage}</h2>

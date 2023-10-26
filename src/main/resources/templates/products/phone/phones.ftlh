@@ -36,24 +36,24 @@
     </#if>
     <hr>
     <#if user.isActive()>
-        <h3>Книги</h3>
+        <h3>Телефоны</h3>
         <#assign productsFound = false>
-        <#list books as book>
-            <#if book.getProductType() == "Books">
+        <#list phones as phone>
+            <#if phone.getProductType() == "Phones">
                 <div class="alert alert-success">
-                    <p>Книга <b>${book.name}</b> ${book.price}$ |
-                        <#if user.id == book.client.id>
-                            <a href="/book/edit/${book.id}">Редактировать</a> |
-                            <a href="/book/delete/${book.id}">Удалить</a> |
+                    <p>Книга <b>${phone.name}</b> ${phone.price}$ |
+                        <#if user.id == phone.client.id>
+                            <a href="/phone/edit/${phone.id}">Редактировать</a> |
+                            <a href="/phone/delete/${phone.id}">Удалить</a> |
                         </#if>
-                        <a href="/book/${book.id}">Подробнее...</a>
+                        <a href="/phone/${phone.id}">Подробнее...</a>
                     </p>
                 </div>
                 <#assign productsFound = true>
             </#if>
         </#list>
         <#if productsFound == false>
-            <h4><i>Книг на продажу нет</i></h4>
+            <h4><i>Телефонов на продажу нет</i></h4>
         </#if>
         <hr>
     </#if>

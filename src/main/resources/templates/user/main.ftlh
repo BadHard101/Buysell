@@ -30,9 +30,9 @@
     <#if user.isActive()>
         <hr>
         <h3>Категории:</h3>
-        <a href="/telephones/selling">Телефоны</a>
+        <a href="/phone/selling">Телефоны</a>
         <a href="/book/selling">Книги</a>
-        <a href="/washingMachines/selling">Стиральные машины</a>
+        <a href="/washingMachine/selling">Стиральные машины</a>
     </#if>
 
 </div>

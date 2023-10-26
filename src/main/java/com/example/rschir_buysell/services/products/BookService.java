@@ -1,15 +1,13 @@
-package com.example.rschir_buysell.services;
+package com.example.rschir_buysell.services.products;
 
 import com.example.rschir_buysell.models.Client;
 import com.example.rschir_buysell.models.products.Book;
-import com.example.rschir_buysell.repositories.BookRepository;
+import com.example.rschir_buysell.repositories.products.BookRepository;
 import com.example.rschir_buysell.repositories.ClientRepository;
-import com.example.rschir_buysell.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.List;
 
@@ -35,6 +33,7 @@ public class BookService {
                         book.getPrice() > 0 &&
                         book.getName() != null &&
                         !book.getName().isEmpty() &&
+                        // local variables
                         book.getAuthor() != null &&
                         !book.getAuthor().isEmpty()
         ) {
@@ -64,12 +63,14 @@ public class BookService {
                         book.getPrice() > 0 &&
                         book.getName() != null &&
                         !book.getName().isEmpty() &&
+                        // local variables
                         book.getAuthor() != null &&
                         !book.getAuthor().isEmpty()
         ) {
             Book original = bookRepository.getById(id);
             original.setName(book.getName());
             original.setPrice(book.getPrice());
+            // local variables
             original.setAuthor(book.getAuthor());
             bookRepository.save(original);
         } else {

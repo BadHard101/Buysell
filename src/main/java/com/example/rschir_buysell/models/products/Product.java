@@ -1,5 +1,6 @@
-package com.example.rschir_buysell.models;
+package com.example.rschir_buysell.models.products;
 
+import com.example.rschir_buysell.models.Client;
 import com.example.rschir_buysell.models.enums.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Data;

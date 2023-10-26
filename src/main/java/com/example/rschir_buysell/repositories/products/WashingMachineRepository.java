@@ -1,4 +1,4 @@
-package com.example.rschir_buysell.repositories;
+package com.example.rschir_buysell.repositories.products;
 
 import com.example.rschir_buysell.models.products.Book;
 import com.example.rschir_buysell.models.products.WashingMachine;

@@ -1,6 +1,7 @@
 package com.example.rschir_buysell.models;
 
 import com.example.rschir_buysell.models.enums.Role;
+import com.example.rschir_buysell.models.products.Product;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,6 +1,5 @@
-package com.example.rschir_buysell.repositories;
+package com.example.rschir_buysell.repositories.products;
 
-import com.example.rschir_buysell.models.Product;
 import com.example.rschir_buysell.models.products.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 
