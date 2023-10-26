@@ -27,19 +27,17 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public String createBook(Principal principal, Book book) {
+    private String validation(Book book) {
         if (
                 book.getPrice() != null &&
-                        book.getPrice() > 0 &&
-                        book.getName() != null &&
-                        !book.getName().isEmpty() &&
-                        // local variables
-                        book.getAuthor() != null &&
-                        !book.getAuthor().isEmpty()
-        ) {
-            book.setClient(getClientByPrincipal(principal));
-            bookRepository.save(book);
-        } else {
+                book.getPrice() > 0 &&
+                book.getName() != null &&
+                !book.getName().isEmpty() &&
+                // local variables
+                book.getAuthor() != null &&
+                !book.getAuthor().isEmpty()
+        ) return "Success";
+        else {
             if (book.getPrice() == null) {
                 return "Укажите цену!";
             } else if (book.getPrice() <= 0) {
@@ -50,7 +48,16 @@ public class BookService {
                 return "Напишите имя автора!";
             }
         }
-        return "Success";
+        return "Error";
+    }
+
+    public String createBook(Principal principal, Book book) {
+        String validation = validation(book);
+        if (validation.equals("Success")) {
+            book.setClient(getClientByPrincipal(principal));
+            bookRepository.save(book);
+        }
+        return validation;
     }
 
     public Book getBookById(Long id) {
@@ -58,34 +65,16 @@ public class BookService {
     }
 
     public String updateBook(Long id, Book book) {
-        if (
-                book.getPrice() != null &&
-                        book.getPrice() > 0 &&
-                        book.getName() != null &&
-                        !book.getName().isEmpty() &&
-                        // local variables
-                        book.getAuthor() != null &&
-                        !book.getAuthor().isEmpty()
-        ) {
+        String validation = validation(book);
+        if (validation.equals("Success")) {
             Book original = bookRepository.getById(id);
             original.setName(book.getName());
             original.setPrice(book.getPrice());
             // local variables
             original.setAuthor(book.getAuthor());
             bookRepository.save(original);
-        } else {
-            if (book.getPrice() == null) {
-                return "Укажите цену!";
-            } else if (book.getPrice() <= 0) {
-                return "Укажите корректную цену!";
-            } else if (book.getName() == null || book.getName().isEmpty()) {
-                return "Напишите название книги!";
-            } else if (book.getAuthor() == null || book.getAuthor().isEmpty()) {
-                return "Напишите имя автора!";
-            }
         }
-
-        return "Success";
+        return validation;
     }
 
     public void deleteBook(Long id, Client client) {

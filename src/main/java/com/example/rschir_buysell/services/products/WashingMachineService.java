@@ -1,6 +1,7 @@
 package com.example.rschir_buysell.services.products;
 
 import com.example.rschir_buysell.models.Client;
+import com.example.rschir_buysell.models.products.Phone;
 import com.example.rschir_buysell.models.products.WashingMachine;
 import com.example.rschir_buysell.repositories.ClientRepository;
 import com.example.rschir_buysell.repositories.products.WashingMachineRepository;
@@ -27,7 +28,7 @@ public class WashingMachineService {
         return washingMachineRepository.findAll();
     }
 
-    public String createWashingMachine(Principal principal, WashingMachine washingMachine) {
+    private String validation(WashingMachine washingMachine) {
         if (
                 washingMachine.getPrice() != null &&
                         washingMachine.getPrice() > 0 &&
@@ -38,10 +39,8 @@ public class WashingMachineService {
                         !washingMachine.getManufacturer().isEmpty() &&
                         washingMachine.getTankCapacity() != null &&
                         washingMachine.getTankCapacity() > 0
-        ) {
-            washingMachine.setClient(getClientByPrincipal(principal));
-            washingMachineRepository.save(washingMachine);
-        } else {
+        ) return "Success";
+        else {
             if (washingMachine.getPrice() == null) {
                 return "Укажите цену!";
             } else if (washingMachine.getPrice() <= 0) {
@@ -56,7 +55,16 @@ public class WashingMachineService {
                 return "Укажите корректную вместимость бака!";
             }
         }
-        return "Success";
+        return "Error";
+    }
+
+    public String createWashingMachine(Principal principal, WashingMachine washingMachine) {
+        String validation = validation(washingMachine);
+        if (validation.equals("Success")) {
+            washingMachine.setClient(getClientByPrincipal(principal));
+            washingMachineRepository.save(washingMachine);
+        }
+        return validation;
     }
 
     public WashingMachine getWashingMachineById(Long id) {
@@ -64,17 +72,8 @@ public class WashingMachineService {
     }
 
     public String updateWashingMachine(Long id, WashingMachine washingMachine) {
-        if (
-                washingMachine.getPrice() != null &&
-                        washingMachine.getPrice() > 0 &&
-                        washingMachine.getName() != null &&
-                        !washingMachine.getName().isEmpty() &&
-                        // local variables
-                        washingMachine.getManufacturer() != null &&
-                        !washingMachine.getManufacturer().isEmpty() &&
-                        washingMachine.getTankCapacity() != null &&
-                        washingMachine.getTankCapacity() >= 0
-        ) {
+        String validation = validation(washingMachine);
+        if (validation.equals("Success")) {
             WashingMachine original = washingMachineRepository.getById(id);
             original.setName(washingMachine.getName());
             original.setPrice(washingMachine.getPrice());
@@ -82,23 +81,8 @@ public class WashingMachineService {
             original.setManufacturer(washingMachine.getManufacturer());
             original.setTankCapacity(washingMachine.getTankCapacity());
             washingMachineRepository.save(original);
-        } else {
-            if (washingMachine.getPrice() == null) {
-                return "Укажите цену!";
-            } else if (washingMachine.getPrice() <= 0) {
-                return "Укажите корректную цену!";
-            } else if (washingMachine.getName() == null || washingMachine.getName().isEmpty()) {
-                return "Напишите название стиральной машины!";
-            } else if (washingMachine.getManufacturer() == null || washingMachine.getManufacturer().isEmpty()) {
-                return "Укажите производителя!";
-            } else if (washingMachine.getTankCapacity() == null) {
-                return "Укажите вместимость бака!";
-            } else if (washingMachine.getTankCapacity() < 0) {
-                return "Укажите корректную вместимость бака!";
-            }
         }
-
-        return "Success";
+        return validation;
     }
 
     public void deleteWashingMachine(Long id, Client client) {

@@ -1,6 +1,7 @@
 package com.example.rschir_buysell.services.products;
 
 import com.example.rschir_buysell.models.Client;
+import com.example.rschir_buysell.models.products.Phone;
 import com.example.rschir_buysell.models.products.Product;
 import com.example.rschir_buysell.repositories.ClientRepository;
 import com.example.rschir_buysell.repositories.products.ProductRepository;
@@ -27,16 +28,44 @@ public class ProductService {
         return clientRepository.findByEmail(principal.getName());
     }
 
-    public String createProduct(Principal principal, Product product) {
+    private String validation(Phone product) {
         if (
                 product.getPrice() != null &&
-                product.getPrice() > 0 &&
-                product.getName() != null &&
-                !product.getName().isEmpty()
-        ) {
-            product.setClient(getClientByPrincipal(principal));
-            productRepository.save(product);
-        } else {
+                        product.getPrice() > 0 &&
+                        product.getName() != null &&
+                        !product.getName().isEmpty() &&
+                        // local variables
+                        product.getManufacturer() != null &&
+                        !product.getManufacturer().isEmpty() &&
+                        product.getBatteryCapacity() != null &&
+                        product.getBatteryCapacity() >= 0
+        ) return "Success";
+        else {
+            if (product.getPrice() == null) {
+                return "Укажите цену!";
+            } else if (product.getPrice() <= 0) {
+                return "Укажите корректную цену!";
+            } else if (product.getName() == null || product.getName().isEmpty()) {
+                return "Напишите название телефона!";
+            } else if (product.getManufacturer() == null || product.getManufacturer().isEmpty()) {
+                return "Укажите производителя!";
+            } else if (product.getBatteryCapacity() == null) {
+                return "Укажите вместимость батареи!";
+            } else if (product.getBatteryCapacity() < 0) {
+                return "Укажите корректную вместимость батареи!";
+            }
+        }
+        return "Error";
+    }
+
+    private String validation(Product product) {
+        if (
+                product.getPrice() != null &&
+                        product.getPrice() > 0 &&
+                        product.getName() != null &&
+                        !product.getName().isEmpty()
+        ) return "Success";
+        else {
             if (product.getPrice() == null) {
                 return "Укажите цену!";
             } else if (product.getPrice() <= 0) {
@@ -45,19 +74,33 @@ public class ProductService {
                 return "Напишите имя!";
             }
         }
-        return "Success";
+        return "Error";
+    }
+
+    public String createProduct(Principal principal, Product product) {
+        String validation = validation(product);
+        if (validation.equals("Success")) {
+            product.setClient(getClientByPrincipal(principal));
+            productRepository.save(product);
+        }
+        return validation;
     }
 
     public Product getProductById(Long id) {
         return productRepository.getById(id);
     }
 
-    public void updateProduct(Long id, Product product) {
-        Product original = productRepository.getById(id);
-        original.setName(product.getName());
-        original.setPrice(product.getPrice());
-        original.setProductType(product.getProductType());
-        productRepository.save(original);
+    public String updateProduct(Long id, Product product) {
+        String validation = validation(product);
+        if (validation.equals("Success")) {
+            Product original = productRepository.getById(id);
+            original.setName(product.getName());
+            original.setPrice(product.getPrice());
+            original.setProductType(product.getProductType());
+            productRepository.save(original);
+        }
+        return validation;
+
     }
 
     public void deleteProduct(Long id, Client client) {
