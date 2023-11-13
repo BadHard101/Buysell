@@ -1,45 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Buysell</title>
-    <!-- Add Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            padding: 1% 5% 2% 5%;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <h1>Buysell</h1>
-    <hr>
-    <#if user.email??>
-        <h3>Пользователь: <i>${user.login}</i></h3>
-        <#if user.isActive()>
-            <a href="/" class="btn btn-primary">Главная</a>
-        </#if>
-        <form action="/logout" method="post">
-            <br>
-            <input type="hidden" name="_csrf" value="${_csrf.token}">
-            <input type="submit" value="Выйти" class="btn btn-danger"/>
-        </form>
-    <#else>
-        <a href="/login" class="btn btn-primary">Войти</a>
-    </#if>
-    <hr>
-    <#if user.isActive()>
-        <h3>Выставить на продажу</h3>
-        <a href="/phone/create">Телефон</a>
-        <a href="/book/create">Книга</a>
-        <a href="/washingMachine/create">Стиральная машина</a>
-    </#if>
-    <#if errorMessage??>
-        <h2 style="color: red">${errorMessage}</h2>
-    </#if>
-</div>
+<#include "../../user/header.ftlh">
 
-<!-- Add Bootstrap JS -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+<#if user.isActive()>
+    <hr>
+    <h3>Выставить на продажу:</h3>
+    <!-- Button Row for Categories -->
+    <div class="row">
+        <div class="col-md-4">
+            <a href="/phone/create" class="btn btn-success btn-block"><i class="fas fa-mobile-alt"></i> Телефоны</a>
+        </div>
+        <div class="col-md-4">
+            <a href="/book/create" class="btn btn-info btn-block"><i class="fas fa-book"></i> Книги</a>
+        </div>
+        <div class="col-md-4">
+            <a href="/washingMachine/selling" class="btn btn-warning btn-block"><i class="fas fa-tshirt"></i> Стиральные машины</a>
+        </div>
+    </div>
+</#if>
+
+<#include "../../user/footer.ftlh">
