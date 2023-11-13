@@ -23,9 +23,7 @@ public class BookService {
         return clientRepository.findByEmail(principal.getName());
     }
 
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
-    }
+
 
     private String validation(Book book) {
         if (
@@ -81,5 +79,9 @@ public class BookService {
         if (client.getId() == bookRepository.getById(id).getClient().getId()) {
             bookRepository.delete(bookRepository.getById(id));
         }
+    }
+
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
     }
 }
