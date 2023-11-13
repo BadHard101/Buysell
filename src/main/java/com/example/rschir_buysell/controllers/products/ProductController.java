@@ -20,7 +20,6 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductRepository productRepository;
 
     @GetMapping("/typeSelect")
     public String productTypeSelect(Model model, Principal principal) {
@@ -34,6 +33,12 @@ public class ProductController {
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id, @AuthenticationPrincipal Client client) {
         productService.deleteProduct(id, client);
+        return "redirect:/";
+    }
+
+    @GetMapping("/addToCart/{id}")
+    public String addProductToCart(@PathVariable Long id, Principal principal) {
+        productService.addProductToCart(id, principal);
         return "redirect:/";
     }
 }

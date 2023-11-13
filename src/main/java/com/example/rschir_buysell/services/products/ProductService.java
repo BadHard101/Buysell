@@ -1,9 +1,11 @@
 package com.example.rschir_buysell.services.products;
 
 import com.example.rschir_buysell.models.Client;
+import com.example.rschir_buysell.models.ShoppingCart;
 import com.example.rschir_buysell.models.products.Phone;
 import com.example.rschir_buysell.models.products.Product;
 import com.example.rschir_buysell.repositories.ClientRepository;
+import com.example.rschir_buysell.repositories.ShoppingCartRepository;
 import com.example.rschir_buysell.repositories.products.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ClientRepository clientRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
@@ -107,5 +110,20 @@ public class ProductService {
         if (client.getId() == productRepository.getById(id).getSeller().getId()) {
             productRepository.delete(productRepository.getById(id));
         }
+    }
+
+    public void addProductToCart(Long id, Principal principal) {
+        Client client = getClientByPrincipal(principal);
+
+        ShoppingCart cart = shoppingCartRepository.getShoppingCartByClient(client);
+        if (cart == null) {
+            cart = new ShoppingCart();
+            cart.setClient(client);
+            cart.setActive(true);
+        }
+
+        cart.addItem(getProductById(id));
+
+        shoppingCartRepository.save(cart);
     }
 }

@@ -11,6 +11,7 @@
                             <a href="/phone/edit/${phone.id}">Редактировать</a> |
                             <a href="/phone/delete/${phone.id}">Удалить</a> |
                         </#if>
+                        <a href="/product/addToCart/${phone.id}">Добавить в корзину</a> |
                         <a href="/phone/${phone.id}">Подробнее...</a>
                     </p>
                 </div>

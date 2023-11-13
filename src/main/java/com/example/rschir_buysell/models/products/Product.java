@@ -31,9 +31,6 @@ public class Product {
     @JoinColumn(name = "seller_id")
     private Client seller;
 
-    /*@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
-    private Client client;*/
 
     @Column
     @Enumerated(EnumType.STRING)

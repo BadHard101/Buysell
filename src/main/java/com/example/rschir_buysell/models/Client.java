@@ -50,9 +50,8 @@ public class Client implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "seller")
     List<Product> products = new ArrayList<>();
 
-    /*@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "client_id")
-    private List<Product> shoppingCart = new ArrayList<>();*/
+    /*@OneToOne(mappedBy = "client")
+    private ShoppingCart shoppingCart;*/
 
     private LocalDateTime dateOfCreated;
 

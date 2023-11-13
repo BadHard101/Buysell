@@ -11,6 +11,7 @@
                             <a href="/washingMachine/edit/${washingMachine.id}">Редактировать</a> |
                             <a href="/washingMachine/delete/${washingMachine.id}">Удалить</a> |
                         </#if>
+                        <a href="/product/addToCart/${washingMachine.id}">Добавить в корзину</a> |
                         <a href="/washingMachine/${washingMachine.id}">Подробнее...</a>
                     </p>
                 </div>
