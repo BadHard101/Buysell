@@ -39,7 +39,7 @@ public class BookController {
 
     @PostMapping("/create")
     public String createBook(Book book, Principal principal, Model model) {
-        book.setProductType(ProductType.Books);
+        book.setProductType(ProductType.Book);
         String st = bookService.createBook(principal, book);
         if (st.equals("Success")) {
             return "redirect:/book/selling";

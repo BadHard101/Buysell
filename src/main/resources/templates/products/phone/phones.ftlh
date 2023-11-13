@@ -4,7 +4,7 @@
         <h3>Телефоны</h3>
         <#assign productsFound = false>
         <#list phones as phone>
-            <#if phone.getProductType() == "Phones">
+            <#if phone.getProductType() == "Phone">
                 <div class="alert alert-success">
                     <p>Телефон <b>${phone.name}</b> ${phone.price}$ |
                         <#if user.id == phone.seller.id>

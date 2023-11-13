@@ -39,7 +39,7 @@ public class PhoneController {
 
     @PostMapping("/create")
     public String createPhone(Phone phone, Principal principal, Model model) {
-        phone.setProductType(ProductType.Phones);
+        phone.setProductType(ProductType.Phone);
         String st = phoneService.createPhone(principal, phone);
         if (st.equals("Success")) {
             return "redirect:/phone/selling";

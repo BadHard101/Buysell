@@ -39,7 +39,7 @@ public class WashingMachineController {
 
     @PostMapping("/create")
     public String createWashingMachine(WashingMachine washingMachine, Principal principal, Model model) {
-        washingMachine.setProductType(ProductType.WashingMachines);
+        washingMachine.setProductType(ProductType.WashingMachine);
         String st = washingMachineService.createWashingMachine(principal, washingMachine);
         if (st.equals("Success")) {
             return "redirect:/washingMachine/selling";

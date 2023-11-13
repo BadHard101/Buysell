@@ -4,7 +4,7 @@
         <h3>Стиральные машины</h3>
         <#assign productsFound = false>
         <#list washingMachines as washingMachine>
-            <#if washingMachine.getProductType() == "WashingMachines">
+            <#if washingMachine.getProductType() == "WashingMachine">
                 <div class="alert alert-success">
                     <p>Стиральная машина <b>${washingMachine.name}</b> ${washingMachine.price}$ |
                         <#if user.id == washingMachine.seller.id>

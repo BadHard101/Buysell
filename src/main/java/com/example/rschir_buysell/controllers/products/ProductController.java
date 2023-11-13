@@ -39,6 +39,6 @@ public class ProductController {
     @GetMapping("/addToCart/{id}")
     public String addProductToCart(@PathVariable Long id, Principal principal) {
         productService.addProductToCart(id, principal);
-        return "redirect:/";
+        return "redirect:/" + productService.getProductById(id).getProductType().toString().toLowerCase() + "/selling";
     }
 }

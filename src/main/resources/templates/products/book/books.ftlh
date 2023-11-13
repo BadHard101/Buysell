@@ -5,7 +5,7 @@
         <h3>Книги</h3>
         <#assign productsFound = false>
         <#list books as book>
-            <#if book.getProductType() == "Books">
+            <#if book.getProductType() == "Book">
                 <div class="alert alert-success">
                     <p>Книга <b>${book.name}</b> ${book.price}$ |
                         <#if user.id == book.seller.id>
