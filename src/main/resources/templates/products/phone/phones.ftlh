@@ -7,7 +7,7 @@
             <#if phone.getProductType() == "Phones">
                 <div class="alert alert-success">
                     <p>Телефон <b>${phone.name}</b> ${phone.price}$ |
-                        <#if user.id == phone.client.id>
+                        <#if user.id == phone.seller.id>
                             <a href="/phone/edit/${phone.id}">Редактировать</a> |
                             <a href="/phone/delete/${phone.id}">Удалить</a> |
                         </#if>

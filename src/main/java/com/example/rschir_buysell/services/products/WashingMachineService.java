@@ -61,7 +61,7 @@ public class WashingMachineService {
     public String createWashingMachine(Principal principal, WashingMachine washingMachine) {
         String validation = validation(washingMachine);
         if (validation.equals("Success")) {
-            washingMachine.setClient(getClientByPrincipal(principal));
+            washingMachine.setSeller(getClientByPrincipal(principal));
             washingMachineRepository.save(washingMachine);
         }
         return validation;
@@ -86,7 +86,7 @@ public class WashingMachineService {
     }
 
     public void deleteWashingMachine(Long id, Client client) {
-        if (client.getId() == washingMachineRepository.getById(id).getClient().getId()) {
+        if (client.getId() == washingMachineRepository.getById(id).getSeller().getId()) {
             washingMachineRepository.delete(washingMachineRepository.getById(id));
         }
     }

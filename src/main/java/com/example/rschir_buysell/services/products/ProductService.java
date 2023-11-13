@@ -80,7 +80,7 @@ public class ProductService {
     public String createProduct(Principal principal, Product product) {
         String validation = validation(product);
         if (validation.equals("Success")) {
-            product.setClient(getClientByPrincipal(principal));
+            product.setSeller(getClientByPrincipal(principal));
             productRepository.save(product);
         }
         return validation;
@@ -104,7 +104,7 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id, Client client) {
-        if (client.getId() == productRepository.getById(id).getClient().getId()) {
+        if (client.getId() == productRepository.getById(id).getSeller().getId()) {
             productRepository.delete(productRepository.getById(id));
         }
     }

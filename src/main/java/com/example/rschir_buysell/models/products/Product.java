@@ -28,11 +28,14 @@ public class Product {
     private Double price;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id")
+    private Client seller;
+
+    /*@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
-    private Client client;
+    private Client client;*/
 
     @Column
     @Enumerated(EnumType.STRING)
     private ProductType productType;
-
 }

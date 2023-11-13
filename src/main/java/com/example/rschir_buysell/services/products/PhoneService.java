@@ -61,7 +61,7 @@ public class PhoneService {
     public String createPhone(Principal principal, Phone phone) {
         String validation = validation(phone);
         if (validation.equals("Success")) {
-            phone.setClient(getClientByPrincipal(principal));
+            phone.setSeller(getClientByPrincipal(principal));
             phoneRepository.save(phone);
         }
         return validation;
@@ -86,7 +86,7 @@ public class PhoneService {
     }
 
     public void deletePhone(Long id, Client client) {
-        if (client.getId() == phoneRepository.getById(id).getClient().getId()) {
+        if (client.getId() == phoneRepository.getById(id).getSeller().getId()) {
             phoneRepository.delete(phoneRepository.getById(id));
         }
     }

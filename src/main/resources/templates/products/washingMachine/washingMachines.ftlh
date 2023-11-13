@@ -7,7 +7,7 @@
             <#if washingMachine.getProductType() == "WashingMachines">
                 <div class="alert alert-success">
                     <p>Стиральная машина <b>${washingMachine.name}</b> ${washingMachine.price}$ |
-                        <#if user.id == washingMachine.client.id>
+                        <#if user.id == washingMachine.seller.id>
                             <a href="/washingMachine/edit/${washingMachine.id}">Редактировать</a> |
                             <a href="/washingMachine/delete/${washingMachine.id}">Удалить</a> |
                         </#if>

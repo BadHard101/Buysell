@@ -52,7 +52,7 @@ public class BookService {
     public String createBook(Principal principal, Book book) {
         String validation = validation(book);
         if (validation.equals("Success")) {
-            book.setClient(getClientByPrincipal(principal));
+            book.setSeller(getClientByPrincipal(principal));
             bookRepository.save(book);
         }
         return validation;
@@ -76,7 +76,7 @@ public class BookService {
     }
 
     public void deleteBook(Long id, Client client) {
-        if (client.getId() == bookRepository.getById(id).getClient().getId()) {
+        if (client.getId() == bookRepository.getById(id).getSeller().getId()) {
             bookRepository.delete(bookRepository.getById(id));
         }
     }

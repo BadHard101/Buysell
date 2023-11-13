@@ -8,7 +8,7 @@
             <#if book.getProductType() == "Books">
                 <div class="alert alert-success">
                     <p>Книга <b>${book.name}</b> ${book.price}$ |
-                        <#if user.id == book.client.id>
+                        <#if user.id == book.seller.id>
                             <a href="/book/edit/${book.id}">Редактировать</a> |
                             <a href="/book/delete/${book.id}">Удалить</a> |
                         </#if>
