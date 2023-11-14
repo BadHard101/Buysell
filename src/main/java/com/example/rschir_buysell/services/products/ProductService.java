@@ -112,10 +112,20 @@ public class ProductService {
         }
     }
 
-    public void addProductToCart(Long id, Principal principal) {
-        Client client = getClientByPrincipal(principal);
+    public ShoppingCart getOrCreateShoppingCartByClient(Client client) {
+        ShoppingCart cart = shoppingCartRepository.getShoppingCartByClientAndActive(client, true);
+        if (cart == null) {
+            cart = new ShoppingCart();
+            cart.setClient(client);
+            cart.setActive(true);
+            shoppingCartRepository.save(cart);
+        }
+        return cart;
+    }
 
-        ShoppingCart cart = shoppingCartRepository.getShoppingCartByClient(client);
+
+    public void addProductToCart(Long id, Client client) {
+        ShoppingCart cart = shoppingCartRepository.getShoppingCartByClientAndActive(client, true);
         if (cart == null) {
             cart = new ShoppingCart();
             cart.setClient(client);
@@ -125,5 +135,23 @@ public class ProductService {
         cart.addItem(getProductById(id));
 
         shoppingCartRepository.save(cart);
+    }
+
+    public void removeProductToCart(Long id, Client client) {
+        ShoppingCart cart = shoppingCartRepository.getShoppingCartByClientAndActive(client, true);
+        if (cart == null) {
+            cart = new ShoppingCart();
+            cart.setClient(client);
+            cart.setActive(true);
+        }
+
+        cart.removeItem(getProductById(id));
+
+        shoppingCartRepository.save(cart);
+    }
+
+    public void checkoutShoppingCart(Client client) {
+        ShoppingCart cart = getOrCreateShoppingCartByClient(client);
+
     }
 }

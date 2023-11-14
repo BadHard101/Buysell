@@ -28,7 +28,7 @@
                     <a href="/product/typeSelect" class="btn btn-primary btn-block"><i class="fas fa-plus-circle"></i> Продать</a>
                 </div>
                 <div class="col-md-4">
-                    <a href="/cart" class="btn btn-secondary btn-block">
+                    <a href="/product/shoppingCart" class="btn btn-secondary btn-block">
                         <i class="fas fa-shopping-cart"></i> Корзина
                     </a>
                 </div>

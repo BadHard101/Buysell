@@ -1,6 +1,7 @@
 package com.example.rschir_buysell.controllers.products;
 
 import com.example.rschir_buysell.models.Client;
+import com.example.rschir_buysell.models.ShoppingCart;
 import com.example.rschir_buysell.models.products.Product;
 import com.example.rschir_buysell.models.enums.ProductType;
 import com.example.rschir_buysell.repositories.products.ProductRepository;
@@ -12,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,8 +38,44 @@ public class ProductController {
     }
 
     @GetMapping("/addToCart/{id}")
-    public String addProductToCart(@PathVariable Long id, Principal principal) {
-        productService.addProductToCart(id, principal);
+    public String addProductToCart(@PathVariable Long id, @AuthenticationPrincipal Client client) {
+        productService.addProductToCart(id, client);
         return "redirect:/" + productService.getProductById(id).getProductType().toString().toLowerCase() + "/selling";
+    }
+
+    @GetMapping("/shoppingCart")
+    public String showShoppingCart(@AuthenticationPrincipal Client client, Model model) {
+        ShoppingCart cart = productService.getOrCreateShoppingCartByClient(client);
+        Map<Product, Integer> items = cart.getItems();
+        // Преобразование Map в список для сортировки
+        List<Map.Entry<Product, Integer>> sortedItems = new ArrayList<>(items.entrySet());
+        // Сортировка списка. Пример: сортировка по имени продукта
+        sortedItems.sort(Comparator.comparing(entry -> entry.getKey().getPrice()));
+
+        // Теперь, когда у вас есть отсортированный список, добавьте его в модель
+        model.addAttribute("user", client);
+        model.addAttribute("items", sortedItems); // Используйте отсортированный список здесь
+        model.addAttribute("cart", cart); // Используйте отсортированный список здесь
+
+        return "user/shoppingCart";
+    }
+
+
+    @GetMapping("/shoppingCart/addItem/{id}")
+    public String addItemToShoppingCart(@PathVariable Long id, @AuthenticationPrincipal Client client, Model model) {
+        productService.addProductToCart(id, client);
+        return "redirect:/product/shoppingCart";
+    }
+
+    @GetMapping("/shoppingCart/removeItem/{id}")
+    public String removeItemFromShoppingCart(@PathVariable Long id, @AuthenticationPrincipal Client client, Model model) {
+        productService.removeProductToCart(id, client);
+        return "redirect:/product/shoppingCart";
+    }
+
+    @GetMapping("/shoppingCart/checkout")
+    public String checkoutShoppingCart(@AuthenticationPrincipal Client client) {
+        productService.checkoutShoppingCart(client);
+        return "redirect:/product/shoppingCart";
     }
 }
