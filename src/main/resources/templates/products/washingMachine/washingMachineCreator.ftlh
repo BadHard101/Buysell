@@ -34,6 +34,7 @@
             Название стиральной машины: <input type="text" name="name"/><br><br>
             Производитель: <input type="text" name="manufacturer"/><br><br>
             Вместимоть бака: <input type="number" step="0.01" name="tankCapacity"/><br><br>
+            Количество: <input type="number" name="quantity"/><br><br>
             Цена: <input type="number" step="0.01" name="price"/><br><br>
 
             <input type="hidden" name="_csrf" value="${_csrf.token}">

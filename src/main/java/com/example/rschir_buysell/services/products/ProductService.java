@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -124,7 +125,7 @@ public class ProductService {
     }
 
 
-    public void addProductToCart(Long id, Client client) {
+    public String addProductToCart(Long id, Client client) {
         ShoppingCart cart = shoppingCartRepository.getShoppingCartByClientAndActive(client, true);
         if (cart == null) {
             cart = new ShoppingCart();
@@ -132,9 +133,13 @@ public class ProductService {
             cart.setActive(true);
         }
 
-        cart.addItem(getProductById(id));
+        Product product = getProductById(id);
+        if (product.getQuantity() > cart.getItems().get(product))
+            cart.addItem(getProductById(id));
+        else return "Вы не можете добавить этого товара больше";
 
         shoppingCartRepository.save(cart);
+        return "Success";
     }
 
     public void removeProductToCart(Long id, Client client) {
@@ -150,8 +155,17 @@ public class ProductService {
         shoppingCartRepository.save(cart);
     }
 
-    public void checkoutShoppingCart(Client client) {
+    /*public String checkoutShoppingCart(Client client) {
         ShoppingCart cart = getOrCreateShoppingCartByClient(client);
+        for (Map.Entry<Product, Integer> entry : cart.getItems().entrySet()) {
+            Product product = entry.getKey();
+            Integer quantity = entry.getValue();
 
-    }
+            if (product.getQuantity() < quantity) {
+
+                return "";
+            }
+        }
+
+    }*/
 }

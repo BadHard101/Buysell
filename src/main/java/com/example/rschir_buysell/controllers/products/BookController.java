@@ -52,6 +52,8 @@ public class BookController {
 
     @GetMapping("/edit/{id}")
     public String editBookForm(@PathVariable("id") Long id, Model model, Principal principal) {
+        if (bookService.getClientByPrincipal(principal).getId() != bookService.getBookById(id).getSeller().getId())
+            return "redirect:/";
         model.addAttribute("user", bookService.getClientByPrincipal(principal));
         Book book = bookService.getBookById(id);
         model.addAttribute("book", book);
@@ -65,6 +67,8 @@ public class BookController {
 
     @PostMapping("/edit/{id}")
     public String updateBook(@PathVariable("id") Long id, Book book, Model model, Principal principal) {
+        if (bookService.getClientByPrincipal(principal).getId() != bookService.getBookById(id).getSeller().getId())
+            return "redirect:/";
         String st = bookService.updateBook(id, book);
         if (st.equals("Success")) {
             return "redirect:/book/selling";
@@ -84,6 +88,8 @@ public class BookController {
 
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id, @AuthenticationPrincipal Client client) {
+        if (client.getId() != bookService.getBookById(id).getSeller().getId())
+            return "redirect:/";
         bookService.deleteBook(id, client);
         return "redirect:/";
     }

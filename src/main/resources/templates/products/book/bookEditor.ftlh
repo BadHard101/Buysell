@@ -32,6 +32,7 @@
     <form action="/book/edit/${book.id}" method="post" enctype="multipart/form-data">
         Название книги: <input type="text" name="name" value="${book.name}"/><br><br>
         Автор: <input type="text" name="author" value="${book.author}"/><br><br>
+        Количество: <input type="number" name="quantity" value="${book.quantity}"/><br><br>
         Цена: <input type="number" step="0.01" name="price" value="${formattedPrice}"/><br><br>
 
         <input type="hidden" name="_csrf" value="${_csrf.token}">

@@ -12,6 +12,7 @@
                             <a href="/book/edit/${book.id}">Редактировать</a> |
                             <a href="/book/delete/${book.id}">Удалить</a> |
                         </#if>
+                        <p>Количество: ${book.quantity}</p> |
                         <a href="/product/addToCart/${book.id}">Добавить в корзину</a> |
                         <a href="/book/${book.id}">Подробнее...</a>
                     </p>

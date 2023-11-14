@@ -33,6 +33,7 @@
         Название стиральной машины: <input type="text" name="name" value="${washingMachine.name}"/><br><br>
         Производитель: <input type="text" name="manufacturer" value="${washingMachine.manufacturer}"/><br><br>
         Вместимоть бака: <input type="number" step="0.01" name="tankCapacity" value="${formattedCapacity}"/><br><br>
+        Количество: <input type="number" name="quantity" value="${washingMachine.quantity}"/><br><br>
         Цена: <input type="number" step="0.01" name="price" value="${formattedPrice}"/><br><br>
 
         <input type="hidden" name="_csrf" value="${_csrf.token}">

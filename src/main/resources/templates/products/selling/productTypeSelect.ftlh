@@ -12,7 +12,7 @@
             <a href="/book/create" class="btn btn-info btn-block"><i class="fas fa-book"></i> Книги</a>
         </div>
         <div class="col-md-4">
-            <a href="/washingMachine/selling" class="btn btn-warning btn-block"><i class="fas fa-tshirt"></i> Стиральные машины</a>
+            <a href="/washingMachine/create" class="btn btn-warning btn-block"><i class="fas fa-tshirt"></i> Стиральные машины</a>
         </div>
     </div>
 </#if>

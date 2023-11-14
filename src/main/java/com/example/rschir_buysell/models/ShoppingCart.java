@@ -38,6 +38,10 @@ public class ShoppingCart {
         }
     }
 
+    public void deleteItem(Product product) {
+        items.remove(product);
+    }
+
     public Double calculateTotal() {
         Double total = 0.0;
         for (Map.Entry<Product, Integer> entry : items.entrySet()) {

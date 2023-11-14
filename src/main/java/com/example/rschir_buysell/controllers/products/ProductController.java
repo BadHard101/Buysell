@@ -38,9 +38,13 @@ public class ProductController {
     }
 
     @GetMapping("/addToCart/{id}")
-    public String addProductToCart(@PathVariable Long id, @AuthenticationPrincipal Client client) {
-        productService.addProductToCart(id, client);
-        return "redirect:/" + productService.getProductById(id).getProductType().toString().toLowerCase() + "/selling";
+    public String addProductToCart(@PathVariable Long id, @AuthenticationPrincipal Client client, Model model) {
+        String st = productService.addProductToCart(id, client);
+        if (!st.equals("Success")) model.addAttribute("errorMessage", st);
+        /*String original = productService.getProductById(id).getProductType().toString();
+        String modified = original.substring(0, 1).toLowerCase() + original.substring(1);
+        return "redirect:/" + modified + "/selling";*/
+        return "redirect:/product/shoppingCart";
     }
 
     @GetMapping("/shoppingCart")
@@ -63,7 +67,8 @@ public class ProductController {
 
     @GetMapping("/shoppingCart/addItem/{id}")
     public String addItemToShoppingCart(@PathVariable Long id, @AuthenticationPrincipal Client client, Model model) {
-        productService.addProductToCart(id, client);
+        String st = productService.addProductToCart(id, client);
+        if (!st.equals("Success")) model.addAttribute("errorMessage", st);
         return "redirect:/product/shoppingCart";
     }
 
@@ -73,9 +78,10 @@ public class ProductController {
         return "redirect:/product/shoppingCart";
     }
 
-    @GetMapping("/shoppingCart/checkout")
+    /*@GetMapping("/shoppingCart/checkout")
     public String checkoutShoppingCart(@AuthenticationPrincipal Client client) {
         productService.checkoutShoppingCart(client);
+
         return "redirect:/product/shoppingCart";
-    }
+    }*/
 }

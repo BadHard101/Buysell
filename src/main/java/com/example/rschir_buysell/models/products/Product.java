@@ -28,10 +28,10 @@ public class Product {
     private String name;
 
     @Column
-    private Double price;
+    private Integer quantity;
 
     @Column
-    private Integer quantity;
+    private Double price;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")

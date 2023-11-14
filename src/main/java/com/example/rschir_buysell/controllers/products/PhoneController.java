@@ -52,6 +52,8 @@ public class PhoneController {
 
     @GetMapping("/edit/{id}")
     public String editPhoneForm(@PathVariable("id") Long id, Model model, Principal principal) {
+        if (phoneService.getClientByPrincipal(principal).getId() != phoneService.getPhoneById(id).getSeller().getId())
+            return "redirect:/";
         model.addAttribute("user", phoneService.getClientByPrincipal(principal));
         Phone phone = phoneService.getPhoneById(id);
         model.addAttribute("phone", phone);
@@ -69,6 +71,8 @@ public class PhoneController {
 
     @PostMapping("/edit/{id}")
     public String updatePhone(@PathVariable("id") Long id, Phone phone, Model model, Principal principal) {
+        if (phoneService.getClientByPrincipal(principal).getId() != phoneService.getPhoneById(id).getSeller().getId())
+            return "redirect:/";
         String st = phoneService.updatePhone(id, phone);
         if (st.equals("Success")) {
             return "redirect:/phone/selling";
@@ -93,6 +97,8 @@ public class PhoneController {
 
     @GetMapping("/delete/{id}")
     public String deletePhone(@PathVariable Long id, @AuthenticationPrincipal Client client) {
+        if (client.getId() != phoneService.getPhoneById(id).getSeller().getId())
+            return "redirect:/";
         phoneService.deletePhone(id, client);
         return "redirect:/";
     }

@@ -52,6 +52,9 @@ public class WashingMachineController {
 
     @GetMapping("/edit/{id}")
     public String editWashingMachineForm(@PathVariable("id") Long id, Model model, Principal principal) {
+        if (washingMachineService.getClientByPrincipal(principal).getId() !=
+                washingMachineService.getWashingMachineById(id).getSeller().getId())
+            return "redirect:/";
         model.addAttribute("user", washingMachineService.getClientByPrincipal(principal));
         WashingMachine washingMachine = washingMachineService.getWashingMachineById(id);
         model.addAttribute("washingMachine", washingMachine);
@@ -68,7 +71,11 @@ public class WashingMachineController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateWashingMachine(@PathVariable("id") Long id, WashingMachine washingMachine, Model model, Principal principal) {
+    public String updateWashingMachine(@PathVariable("id") Long id,
+                                       WashingMachine washingMachine, Model model, Principal principal) {
+        if (washingMachineService.getClientByPrincipal(principal).getId() !=
+                washingMachineService.getWashingMachineById(id).getSeller().getId())
+            return "redirect:/";
         String st = washingMachineService.updateWashingMachine(id, washingMachine);
         if (st.equals("Success")) {
             return "redirect:/washingMachine/selling";
@@ -93,6 +100,8 @@ public class WashingMachineController {
 
     @GetMapping("/delete/{id}")
     public String deleteWashingMachine(@PathVariable Long id, @AuthenticationPrincipal Client client) {
+        if (client.getId() != washingMachineService.getWashingMachineById(id).getSeller().getId())
+            return "redirect:/";
         washingMachineService.deleteWashingMachine(id, client);
         return "redirect:/";
     }

@@ -34,6 +34,7 @@
             Название телефона: <input type="text" name="name"/><br><br>
             Производитель: <input type="text" name="manufacturer"/><br><br>
             Вместимоть батареи: <input type="number" name="batteryCapacity"/><br><br>
+            Количество: <input type="number" name="quantity"/><br><br>
             Цена: <input type="number" step="0.01" name="price"/><br><br>
 
             <input type="hidden" name="_csrf" value="${_csrf.token}">
