@@ -69,7 +69,19 @@ public class ProductController {
     public String addItemToShoppingCart(@PathVariable Long id, @AuthenticationPrincipal Client client, Model model) {
         String st = productService.addProductToCart(id, client);
         if (!st.equals("Success")) model.addAttribute("errorMessage", st);
-        return "redirect:/product/shoppingCart";
+
+        ShoppingCart cart = productService.getOrCreateShoppingCartByClient(client);
+        Map<Product, Integer> items = cart.getItems();
+        // Преобразование Map в список для сортировки
+        List<Map.Entry<Product, Integer>> sortedItems = new ArrayList<>(items.entrySet());
+        // Сортировка списка. Пример: сортировка по имени продукта
+        sortedItems.sort(Comparator.comparing(entry -> entry.getKey().getPrice()));
+
+        // Теперь, когда у вас есть отсортированный список, добавьте его в модель
+        model.addAttribute("user", client);
+        model.addAttribute("items", sortedItems); // Используйте отсортированный список здесь
+        model.addAttribute("cart", cart); // Используйте отсортированный список здесь
+        return "user/shoppingCart";
     }
 
     @GetMapping("/shoppingCart/removeItem/{id}")
