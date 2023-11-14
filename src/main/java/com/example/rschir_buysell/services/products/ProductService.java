@@ -134,8 +134,11 @@ public class ProductService {
         }
 
         Product product = getProductById(id);
-        if (product.getQuantity() > cart.getItems().get(product))
+        if (cart.getItems().get(product) != null && product.getQuantity() > cart.getItems().get(product))
             cart.addItem(getProductById(id));
+        else if (cart.getItems().get(product) == null)
+            cart.addItem(getProductById(id));
+
         else return "Вы не можете добавить этого товара больше";
 
         shoppingCartRepository.save(cart);
@@ -155,17 +158,36 @@ public class ProductService {
         shoppingCartRepository.save(cart);
     }
 
-    /*public String checkoutShoppingCart(Client client) {
+    public String checkoutShoppingCart(Client client) {
         ShoppingCart cart = getOrCreateShoppingCartByClient(client);
         for (Map.Entry<Product, Integer> entry : cart.getItems().entrySet()) {
             Product product = entry.getKey();
             Integer quantity = entry.getValue();
 
             if (product.getQuantity() < quantity) {
-
-                return "";
+                return "К сожалению, Вы не можете оформить заказ.\n" +
+                        "Товара " + product.getProductType() + " " +
+                        product.getName() + " в таком количестве больше нет.\n" +
+                        "Осталось: " + product.getQuantity();
             }
         }
 
-    }*/
+        for (Map.Entry<Product, Integer> entry : cart.getItems().entrySet()) {
+            Product product = entry.getKey();
+            Integer quantity = entry.getValue();
+
+            product.setQuantity(product.getQuantity() - quantity);
+            productRepository.save(product);
+        }
+
+        // Сохранить прошлую корзину как совершенный заказ
+
+        cart.setActive(false);
+        cart = new ShoppingCart();
+        cart.setClient(client);
+        cart.setActive(true);
+        shoppingCartRepository.save(cart);
+
+        return "Success";
+    }
 }

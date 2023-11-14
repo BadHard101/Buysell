@@ -66,6 +66,9 @@
             <button class="checkout-button" type="button" onclick="location.href='/product/shoppingCart/checkout'">Оформить заказ</button>
         </div>
         <hr>
+        <#if successLabel??>
+            <h2 style="color: green">${successLabel}</h2>
+        </#if>
         <#if errorMessage??>
             <h2 style="color: red">${errorMessage}</h2>
         </#if>
