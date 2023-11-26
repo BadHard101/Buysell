@@ -18,7 +18,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public abstract class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column

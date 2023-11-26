@@ -1,41 +1,31 @@
-package com.example.rschir_buysell.controllers.products;
+package com.example.rschir_buysell.controllers.products.user;
 
 import com.example.rschir_buysell.models.Client;
 import com.example.rschir_buysell.models.ShoppingCart;
-import com.example.rschir_buysell.models.products.Product;
 import com.example.rschir_buysell.models.enums.ProductType;
-import com.example.rschir_buysell.repositories.products.ProductRepository;
+import com.example.rschir_buysell.models.products.Product;
 import com.example.rschir_buysell.services.products.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/product")
-public class ProductController {
+public class ProductUserController {
 
     private final ProductService productService;
-
-    @GetMapping("/typeSelect")
-    public String productTypeSelect(Model model, Principal principal) {
-        List<Product> products = productService.getAllProducts();
-        model.addAttribute("products", products);
-        model.addAttribute("user", productService.getClientByPrincipal(principal));
-        model.addAttribute("types", ProductType.values());
-        return "/products/selling/productTypeSelect";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Long id, @AuthenticationPrincipal Client client) {
-        productService.deleteProduct(id, client);
-        return "redirect:/";
-    }
 
     @GetMapping("/addToCart/{id}")
     public String addProductToCart(@PathVariable Long id, @AuthenticationPrincipal Client client, Model model) {

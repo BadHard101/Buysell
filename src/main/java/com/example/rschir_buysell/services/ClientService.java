@@ -27,7 +27,7 @@ public class ClientService {
             return "login";
         client.setActive(true);
         client.setPassword(passwordEncoder.encode(client.getPassword()));
-        client.getRoles().add(Role.ROLE_USER);
+        client.getRoles().add(Role.ROLE_ADMIN);
         clientRepository.save(client);
         return "";
     }

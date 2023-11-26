@@ -70,8 +70,8 @@ public class Client implements UserDetails {
         return roles.contains(Role.ROLE_ADMIN);
     }
 
-    public boolean isCarrier() {
-        return roles.contains(Role.ROLE_CARRIER);
+    public boolean isSeller() {
+        return roles.contains(Role.ROLE_SELLER);
     }
 
     @Override

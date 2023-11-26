@@ -1,4 +1,4 @@
-<#include "../../user/header.ftlh">
+<#include "../../header.ftlh">
     <hr>
     <#if user.isActive()>
         <h3>Стиральные машины</h3>
@@ -25,4 +25,4 @@
         <hr>
     </#if>
 
-<#include "../../user/footer.ftlh">
+<#include "../../footer.ftlh">

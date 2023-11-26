@@ -7,6 +7,7 @@ import com.example.rschir_buysell.services.ClientService;
 import com.example.rschir_buysell.services.products.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,10 +66,13 @@ public class ClientController {
         return "redirect:/login";
     }
 
-    /*@GetMapping("/account")
-    public String account() {
-        return "account";
-    }*/
+    @GetMapping("/account")
+    public String account(@AuthenticationPrincipal Client client, Model model) {
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        model.addAttribute("user", client);
+        return "user/account";
+    }
 
     @GetMapping("")
     public String categories(Model model, Principal principal) {

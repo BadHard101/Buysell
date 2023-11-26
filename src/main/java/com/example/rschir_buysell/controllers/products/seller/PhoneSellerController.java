@@ -1,10 +1,11 @@
-package com.example.rschir_buysell.controllers.products;
+package com.example.rschir_buysell.controllers.products.seller;
 
 import com.example.rschir_buysell.models.Client;
 import com.example.rschir_buysell.models.enums.ProductType;
 import com.example.rschir_buysell.models.products.Phone;
 import com.example.rschir_buysell.services.products.PhoneService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,17 +20,9 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/phone")
-public class PhoneController {
+@PreAuthorize("hasAuthority('ROLE_SELLER') or hasAuthority('ROLE_ADMIN')")
+public class PhoneSellerController {
     private final PhoneService phoneService;
-
-    @GetMapping("/selling")
-    public String showPhones(Model model, Principal principal) {
-        List<Phone> phones = phoneService.getAllPhones();
-        model.addAttribute("phones", phones);
-        model.addAttribute("user", phoneService.getClientByPrincipal(principal));
-        model.addAttribute("types", ProductType.values());
-        return "products/phone/phones";
-    }
 
     @GetMapping("/create")
     public String createPhonePage(Model model, Principal principal) {

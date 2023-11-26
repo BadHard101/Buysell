@@ -1,10 +1,11 @@
-package com.example.rschir_buysell.controllers.products;
+package com.example.rschir_buysell.controllers.products.seller;
 
 import com.example.rschir_buysell.models.Client;
 import com.example.rschir_buysell.models.enums.ProductType;
 import com.example.rschir_buysell.models.products.Book;
 import com.example.rschir_buysell.services.products.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,17 +20,9 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/book")
-public class BookController {
+@PreAuthorize("hasAuthority('ROLE_SELLER') or hasAuthority('ROLE_ADMIN')")
+public class BookSellerController {
     private final BookService bookService;
-
-    @GetMapping("/selling")
-    public String showBooks(Model model, Principal principal) {
-        List<Book> books = bookService.getAllBooks();
-        model.addAttribute("books", books);
-        model.addAttribute("user", bookService.getClientByPrincipal(principal));
-        model.addAttribute("types", ProductType.values());
-        return "products/book/books";
-    }
 
     @GetMapping("/create")
     public String createBookPage(Model model, Principal principal) {

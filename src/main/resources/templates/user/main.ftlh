@@ -1,2 +1,2 @@
-<#include "header.ftlh">
-<#include "footer.ftlh">
+<#include "../header.ftlh">
+<#include "../footer.ftlh">

@@ -25,6 +25,9 @@
             <!-- Button Row for Sell, Cart, Logout -->
             <div class="row button-row">
                 <div class="col-md-4">
+                    <a href="/account" class="btn btn-primary btn-block"> Аккаунт</a>
+                </div>
+                <div class="col-md-4">
                     <a href="/product/typeSelect" class="btn btn-primary btn-block"><i class="fas fa-plus-circle"></i> Продать</a>
                 </div>
                 <div class="col-md-4">

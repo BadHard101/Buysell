@@ -1,4 +1,4 @@
-<#include "header.ftlh">
+<#include "../header.ftlh">
 
 <style>
     /* Стили для кнопок */
@@ -75,4 +75,4 @@
     </#if>
 </#if>
 
-<#include "footer.ftlh">
+<#include "../footer.ftlh">
