@@ -27,9 +27,11 @@
                 <div class="col-md-4">
                     <a href="/account" class="btn btn-primary btn-block"> Аккаунт</a>
                 </div>
-                <div class="col-md-4">
-                    <a href="/product/typeSelect" class="btn btn-primary btn-block"><i class="fas fa-plus-circle"></i> Продать</a>
-                </div>
+                <#if user.isSeller() == true>
+                    <div class="col-md-4">
+                        <a href="/product/typeSelect" class="btn btn-primary btn-block"><i class="fas fa-plus-circle"></i> Продать</a>
+                    </div>
+                </#if>
                 <div class="col-md-4">
                     <a href="/product/shoppingCart" class="btn btn-secondary btn-block">
                         <i class="fas fa-shopping-cart"></i> Корзина
@@ -41,6 +43,11 @@
                         <input type="submit" value="Выйти" class="btn btn-danger btn-block"/>
                     </form>
                 </div>
+                <#if user.isAdmin() == true>
+                    <div class="col-md-4">
+                        <a href="/admin/panel" class="btn btn-primary btn-block"> Панель администратора</a>
+                    </div>
+                </#if>
             </div>
         </#if>
     <#else>
