@@ -44,9 +44,14 @@ public abstract class Product {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
             mappedBy = "product")
     private List<Image> images = new ArrayList<>();
+    private Long previewImageId;
 
     public void addImageToProduct(Image image) {
         image.setProduct(this);
         images.add(image);
+    }
+
+    public boolean hasPreview() {
+        return previewImageId != null;
     }
 }

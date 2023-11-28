@@ -1,6 +1,7 @@
 package com.example.rschir_buysell.controllers.products.seller;
 
 import com.example.rschir_buysell.models.Client;
+import com.example.rschir_buysell.models.Image;
 import com.example.rschir_buysell.models.enums.ProductType;
 import com.example.rschir_buysell.models.products.Phone;
 import com.example.rschir_buysell.services.products.PhoneService;
@@ -9,11 +10,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -31,9 +31,8 @@ public class PhoneSellerController {
     }
 
     @PostMapping("/create")
-    public String createPhone(Phone phone, Principal principal, Model model) {
-        phone.setProductType(ProductType.Phone);
-        String st = phoneService.createPhone(principal, phone);
+    public String createPhone(@RequestParam("file1") MultipartFile file1, Phone phone, Principal principal, Model model) throws IOException {
+        String st = phoneService.createPhone(principal, phone, file1);
         if (st.equals("Success")) {
             return "redirect:/phone/selling";
         } else {
@@ -63,10 +62,10 @@ public class PhoneSellerController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updatePhone(@PathVariable("id") Long id, Phone phone, Model model, Principal principal) {
+    public String updatePhone(@RequestParam("file1") MultipartFile file1, @PathVariable("id") Long id, Phone phone, Model model, Principal principal) throws IOException {
         if (phoneService.getClientByPrincipal(principal).getId() != phoneService.getPhoneById(id).getSeller().getId())
             return "redirect:/";
-        String st = phoneService.updatePhone(id, phone);
+        String st = phoneService.updatePhone(id, phone, file1);
         if (st.equals("Success")) {
             return "redirect:/phone/selling";
         } else {

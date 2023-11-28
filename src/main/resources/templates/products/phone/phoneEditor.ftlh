@@ -30,6 +30,10 @@
     <hr>
     <h3>Обновить информацию о телефоне:</h3>
     <form action="/phone/edit/${phone.id}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="file1" class="form-label">Фотография:</label>
+            <input type="file" class="form-control" id="file1" name="file1">
+        </div>
         Название телефона: <input type="text" name="name" value="${phone.name}"/><br><br>
         Производитель: <input type="text" name="manufacturer" value="${phone.manufacturer}"/><br><br>
         Вместимоть батареи: <input type="number" name="batteryCapacity" value="${formattedCapacity}"/><br><br>
