@@ -38,7 +38,7 @@
     <#list items as item>
         <div class="product-card" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; padding: 10px;">
             <#if item.key.images?has_content>
-                <img src="${item.key.images[0]}" alt="Изображение продукта" style="width: 150px; height: auto;">
+                <img src="/images/${item.key.previewImageId}" alt="Изображение продукта" style="width: 150px; height: auto;">
             </#if>
             <div style="flex-grow: 1;">
                 <h4>${item.key.productType} ${item.key.name}</h4> <!-- Название продукта -->
