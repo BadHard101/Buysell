@@ -30,6 +30,10 @@
     <hr>
     <h3>Обновить информацию о книге:</h3>
     <form action="/book/edit/${book.id}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="file1" class="form-label">Фотография:</label>
+            <input type="file" class="form-control" id="file1" name="file1">
+        </div>
         Название книги: <input type="text" name="name" value="${book.name}"/><br><br>
         Автор: <input type="text" name="author" value="${book.author}"/><br><br>
         Количество: <input type="number" name="quantity" value="${book.quantity}"/><br><br>

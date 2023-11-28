@@ -102,11 +102,11 @@ public class PhoneService {
         if (validation.equals("Success")) {
             Phone original = phoneRepository.getById(id);
 
-            if (original.hasPreview()) {
-                imageRepository.deleteById(original.getPreviewImageId());
-            }
             Image image1;
             if (file1.getSize() != 0) {
+                if (original.hasPreview()) {
+                    imageRepository.deleteById(original.getPreviewImageId());
+                }
                 image1 = toImageEntity(file1);
                 image1.setPreviewImage(true);
                 imageRepository.save(image1);

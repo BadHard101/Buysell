@@ -30,6 +30,10 @@
     <hr>
     <h3>Обновить информацию о стиральной машине:</h3>
     <form action="/washingMachine/edit/${washingMachine.id}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="file1" class="form-label">Фотография:</label>
+            <input type="file" class="form-control" id="file1" name="file1">
+        </div>
         Название стиральной машины: <input type="text" name="name" value="${washingMachine.name}"/><br><br>
         Производитель: <input type="text" name="manufacturer" value="${washingMachine.manufacturer}"/><br><br>
         Вместимоть бака: <input type="number" step="0.01" name="tankCapacity" value="${formattedCapacity}"/><br><br>

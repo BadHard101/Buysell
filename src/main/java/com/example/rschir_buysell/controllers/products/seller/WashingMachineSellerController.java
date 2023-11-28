@@ -9,11 +9,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -31,9 +30,8 @@ public class WashingMachineSellerController {
     }
 
     @PostMapping("/create")
-    public String createWashingMachine(WashingMachine washingMachine, Principal principal, Model model) {
-        washingMachine.setProductType(ProductType.WashingMachine);
-        String st = washingMachineService.createWashingMachine(principal, washingMachine);
+    public String createWashingMachine(@RequestParam("file1") MultipartFile file1, WashingMachine washingMachine, Principal principal, Model model) throws IOException {
+        String st = washingMachineService.createWashingMachine(principal, washingMachine, file1);
         if (st.equals("Success")) {
             return "redirect:/washingMachine/selling";
         } else {
@@ -64,12 +62,12 @@ public class WashingMachineSellerController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateWashingMachine(@PathVariable("id") Long id,
-                                       WashingMachine washingMachine, Model model, Principal principal) {
+    public String updateWashingMachine(@RequestParam("file1") MultipartFile file1, @PathVariable("id") Long id,
+                                       WashingMachine washingMachine, Model model, Principal principal) throws IOException {
         if (washingMachineService.getClientByPrincipal(principal).getId() !=
                 washingMachineService.getWashingMachineById(id).getSeller().getId())
             return "redirect:/";
-        String st = washingMachineService.updateWashingMachine(id, washingMachine);
+        String st = washingMachineService.updateWashingMachine(id, washingMachine, file1);
         if (st.equals("Success")) {
             return "redirect:/washingMachine/selling";
         } else {

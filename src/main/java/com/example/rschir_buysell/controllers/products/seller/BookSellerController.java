@@ -9,11 +9,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -31,9 +30,8 @@ public class BookSellerController {
     }
 
     @PostMapping("/create")
-    public String createBook(Book book, Principal principal, Model model) {
-        book.setProductType(ProductType.Book);
-        String st = bookService.createBook(principal, book);
+    public String createBook(@RequestParam("file1") MultipartFile file1, Book book, Principal principal, Model model) throws IOException {
+        String st = bookService.createBook(principal, book, file1);
         if (st.equals("Success")) {
             return "redirect:/book/selling";
         } else {
@@ -59,10 +57,10 @@ public class BookSellerController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateBook(@PathVariable("id") Long id, Book book, Model model, Principal principal) {
+    public String updateBook(@RequestParam("file1") MultipartFile file1, @PathVariable("id") Long id, Book book, Model model, Principal principal) throws IOException {
         if (bookService.getClientByPrincipal(principal).getId() != bookService.getBookById(id).getSeller().getId())
             return "redirect:/";
-        String st = bookService.updateBook(id, book);
+        String st = bookService.updateBook(id, book, file1);
         if (st.equals("Success")) {
             return "redirect:/book/selling";
         } else {

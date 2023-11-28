@@ -15,4 +15,9 @@ public class Phone extends Product {
 
     @Column
     private Integer batteryCapacity;
+
+    @Override
+    public String toControllerProductType() {
+        return "phone";
+    }
 }

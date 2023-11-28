@@ -54,4 +54,6 @@ public abstract class Product {
     public boolean hasPreview() {
         return previewImageId != null;
     }
+
+    public abstract String toControllerProductType();
 }

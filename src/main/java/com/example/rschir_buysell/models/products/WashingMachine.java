@@ -15,4 +15,9 @@ public class WashingMachine extends Product {
 
     @Column
     private Double tankCapacity;
+
+    @Override
+    public String toControllerProductType() {
+        return "washingMachine";
+    }
 }

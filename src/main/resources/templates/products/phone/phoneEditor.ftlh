@@ -36,7 +36,7 @@
         </div>
         Название телефона: <input type="text" name="name" value="${phone.name}"/><br><br>
         Производитель: <input type="text" name="manufacturer" value="${phone.manufacturer}"/><br><br>
-        Вместимоть батареи: <input type="number" name="batteryCapacity" value="${formattedCapacity}"/><br><br>
+        Вместимость батареи: <input type="number" name="batteryCapacity" value="${formattedCapacity}"/><br><br>
         Количество: <input type="number" name="quantity" value="${phone.quantity}"/><br><br>
         Цена: <input type="number" step="0.01" name="price" value="${formattedPrice}"/><br><br>
 

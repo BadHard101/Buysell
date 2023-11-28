@@ -5,7 +5,7 @@
     <#assign productsFound = false>
     <div class="row">
         <#list phones as phone>
-            <#if phone.getProductType() == "Phone">
+            <#if phone.getProductType() == "Phone" && phone.quantity gt 0>
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <#if phone.hasPreview()>

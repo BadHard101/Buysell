@@ -12,4 +12,9 @@ import javax.persistence.Entity;
 public class Book extends Product {
     @Column
     private String author;
+
+    @Override
+    public String toControllerProductType() {
+        return "book";
+    }
 }
