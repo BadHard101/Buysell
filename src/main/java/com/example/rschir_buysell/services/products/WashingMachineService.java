@@ -116,6 +116,7 @@ public class WashingMachineService {
 
             original.setName(washingMachine.getName());
             original.setPrice(washingMachine.getPrice());
+            original.setQuantity(washingMachine.getQuantity());
             // local variables
             original.setManufacturer(washingMachine.getManufacturer());
             original.setTankCapacity(washingMachine.getTankCapacity());

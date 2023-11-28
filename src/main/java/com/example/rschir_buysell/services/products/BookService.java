@@ -106,6 +106,7 @@ public class BookService {
 
             original.setName(book.getName());
             original.setPrice(book.getPrice());
+            original.setQuantity(book.getQuantity());
             // local variables
             original.setAuthor(book.getAuthor());
             bookRepository.save(original);

@@ -116,6 +116,7 @@ public class PhoneService {
 
             original.setName(phone.getName());
             original.setPrice(phone.getPrice());
+            original.setQuantity(phone.getQuantity());
             // local variables
             original.setManufacturer(phone.getManufacturer());
             original.setBatteryCapacity(phone.getBatteryCapacity());
